@@ -37,8 +37,15 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         userId: id
       },
+      include:{
+        ItemTODO: {
+          orderBy: {
+              order: 'asc'
+          }
+        } 
+      },
       orderBy: {
-        orderNumber: 'asc'
+        orderNumber: 'asc',
       }
     })
 
