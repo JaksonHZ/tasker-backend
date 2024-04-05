@@ -15,6 +15,16 @@ export class PrismaListTodoRepository implements ListTodoRepository {
     return list;
   }
 
+  async findById(id: string) {
+    const list = await prisma.listTODO.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return list;
+  }
+
   async delete(id: string) {
     await prisma.listTODO.delete({
       where: {
