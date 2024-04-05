@@ -51,4 +51,14 @@ export class PrismaUserRepository implements UserRepository {
 
     return lists;
   }
+
+  async findCategories(id: string){
+    const categories = await prisma.category.findMany({
+      where: {
+        userId: id
+      }
+    })
+
+    return categories;
+  }
 }
