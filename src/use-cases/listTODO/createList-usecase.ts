@@ -7,8 +7,6 @@ interface createListUseCaseRequest {
   orderNumber: number;
 }
 
-
-
 export class CreateListUseCase {
   constructor(
     private listTODORepository: ListTodoRepository,

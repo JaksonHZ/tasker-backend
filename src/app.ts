@@ -6,9 +6,13 @@ import { categoryTODORoutes } from "./http/controllers/category/routes";
 import { ZodError } from "zod";
 import fastifyJwt from "@fastify/jwt";
 import { env } from "./env";
+import fastifyCors from "@fastify/cors";
 
 export const app = fastify();
 
+app.register(fastifyCors, {
+  origin: '*',
+})
 app.register(fastifyJwt, {
   secret: env.SECRET_JWT
 })

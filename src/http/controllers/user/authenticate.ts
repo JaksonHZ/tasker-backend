@@ -15,8 +15,8 @@ export async function authenticateUser(request: FastifyRequest, reply: FastifyRe
 
     const { user } = await authenticateUseCase.execute({ email, password });
 
-    const accessToken = await reply.jwtSign({ email: user.email }, {sign: { sub: user.id}});
-    const refreshToken = await reply.jwtSign({ email: user.email }, {sign: { sub: user.id, expiresIn: '7d'}});
+    const accessToken = await reply.jwtSign({ email: user.email }, {sign: { sub: user.id, expiresIn: '1h' }});
+    const refreshToken = await reply.jwtSign({ email: user.email }, {sign: { sub: user.id, expiresIn: '12h'}});
 
     return reply.status(200).send({
       accessToken,
