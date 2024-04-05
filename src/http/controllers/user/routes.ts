@@ -3,6 +3,7 @@ import { registerUser } from "./register";
 import { authenticateUser } from "./authenticate";
 import { getLists } from "./getLists";
 import { verifyJWT } from "../../middlewares/verify-jwt";
+import { refreshToken } from "./refreshToken";
 export async function userRoutes(app: FastifyInstance) {
   app.get("/user", async (request, reply) => {
     console.log("GET /user");
@@ -12,5 +13,7 @@ export async function userRoutes(app: FastifyInstance) {
 
   app.post("/authenticate", authenticateUser)
 
-  app.get("/user/list", {onRequest: [verifyJWT]} , getLists)
+  app.get("/user/list", {onRequest: [verifyJWT]}, getLists)
+
+  app.patch("/refresh-token", refreshToken)
 }
