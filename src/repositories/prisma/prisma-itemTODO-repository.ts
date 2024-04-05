@@ -18,17 +18,61 @@ export class PrismaItemTodoRepository implements ItemTodoRepository {
     return itemTODO;
   }
 
-  async update(id: string, title: string, description?: string, categoryId?: string){
-    throw new Error("Method not implemented.");
+  async findById(id: string){
+    const itemTODO = await prisma.itemTODO.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return itemTODO;
+  }
+
+  async update(id: string, title?: string, description?: string, categoryId?: string, done?: boolean){
+    const itemTODO = await prisma.itemTODO.update({
+      where: {
+        id
+      },
+      data: {
+        title,
+        description,
+        categoryId,
+        done
+      }
+    });
+
+    return itemTODO;
   }
   async updateOrder(id: string, order: number) {
-    throw new Error("Method not implemented.");
+    const itemTODO = await prisma.itemTODO.update({
+      where: {
+        id
+      },
+      data: {
+        order
+      }
+    });
+
+    return itemTODO;
   }
   async changeList(id: string, listTODOId: string){
-    throw new Error("Method not implemented.");
+    const itemTODO = await prisma.itemTODO.update({
+      where: {
+        id
+      },
+      data: {
+        listTODOId
+      }
+    });
+
+    return itemTODO;
   }
   async delete(id: string){
-    throw new Error("Method not implemented.");
+    await prisma.itemTODO.delete({
+      where: {
+        id
+      }
+    });
   }
   
 }
