@@ -8,17 +8,18 @@ export async function updateItem(request: FastifyRequest, reply: FastifyReply) {
     description: zod.string().optional(), 
     categoryId: zod.string().optional(),
     done: zod.boolean().optional(),
+    order: zod.number().optional(),
     id: zod.string(),
   });
 
-  const { id, title, categoryId, description, done } = bodySchema.parse(request.body);
+  const { id, title, categoryId, description, done, order } = bodySchema.parse(request.body);
 
   try {
     const updateItemUseCase = makeUpdateItemUseCase();
 
-    await updateItemUseCase.execute({ id, title, categoryId, description, done});
+    await updateItemUseCase.execute({ id, title, categoryId, description, done, order});
 
-    return reply.status(201).send();
+    return reply.status(200).send();
 
   } catch (error) {
     return reply.code(500).send({ message: "error" });

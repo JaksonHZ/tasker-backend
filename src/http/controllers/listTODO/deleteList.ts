@@ -13,7 +13,7 @@ export async function deleteList(request: FastifyRequest, reply: FastifyReply) {
 
     await deleteListUseCase.execute({ id });
 
-    return reply.status(201).send();
+    return reply.status(200).send();
 
   } catch (error) {
     return reply.code(500).send({ message: "error" });

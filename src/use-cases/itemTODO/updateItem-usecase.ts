@@ -1,4 +1,3 @@
-import { ListTodoRepository } from "../../repositories/listTODO-repository";
 import { ItemTodoRepository } from "../../repositories/itemTODO-repository";
 
 interface updateItemUseCaseRequest {
@@ -6,7 +5,8 @@ interface updateItemUseCaseRequest {
   title?: string,
   description?: string, 
   categoryId?: string
-  done?: boolean
+  done?: boolean,
+  order?: number
 }
 
 export class UpdateItemUseCase {
@@ -14,7 +14,7 @@ export class UpdateItemUseCase {
     private itemTODORepository: ItemTodoRepository,
   ){}
 
-  async execute({id, title, categoryId, description, done}: updateItemUseCaseRequest) {
+  async execute({id, title, categoryId, description, done, order}: updateItemUseCaseRequest) {
 
     const itemTODO = await this.itemTODORepository.findById(id);
 
@@ -22,7 +22,7 @@ export class UpdateItemUseCase {
       throw new Error('Item not found');
     }
 
-    await this.itemTODORepository.update(id, title, description, categoryId, done);
+    await this.itemTODORepository.update(id, title, description, categoryId, done, order);
 
     return;
   }

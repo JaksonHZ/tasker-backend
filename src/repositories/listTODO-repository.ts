@@ -1,5 +1,4 @@
 import { User, ListTODO } from "@prisma/client";
-
 export interface ListTodoRepository {
   create(title: string, userId: string, orderNumber: number): Promise<ListTODO>;
   findById(id: string): Promise<ListTODO | null>;

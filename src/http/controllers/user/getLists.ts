@@ -9,7 +9,7 @@ export async function getLists(request: FastifyRequest, reply: FastifyReply) {
 
     const { lists } = await getListsUseCase.execute({ userId: request.user.sub});
 
-    return reply.status(201).send({
+    return reply.status(200).send({
       lists
     });
 

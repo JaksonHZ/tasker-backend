@@ -28,7 +28,7 @@ export class PrismaItemTodoRepository implements ItemTodoRepository {
     return itemTODO;
   }
 
-  async update(id: string, title?: string, description?: string, categoryId?: string, done?: boolean){
+  async update(id: string, title?: string, description?: string, categoryId?: string, done?: boolean, order?: number){
     const itemTODO = await prisma.itemTODO.update({
       where: {
         id
@@ -37,34 +37,23 @@ export class PrismaItemTodoRepository implements ItemTodoRepository {
         title,
         description,
         categoryId,
-        done
-      }
-    });
-
-    return itemTODO;
-  }
-  async updateOrder(id: string, order: number) {
-    const itemTODO = await prisma.itemTODO.update({
-      where: {
-        id
-      },
-      data: {
+        done,
         order
       }
     });
 
     return itemTODO;
   }
-  async changeList(id: string, listTODOId: string){
+  async changeList(id: string, listTODOId: string, order: number){
     const itemTODO = await prisma.itemTODO.update({
       where: {
         id
       },
       data: {
-        listTODOId
+        listTODOId,
+        order
       }
     });
-
     return itemTODO;
   }
   async delete(id: string){

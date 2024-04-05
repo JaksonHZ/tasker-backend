@@ -14,7 +14,7 @@ export async function updateList(request: FastifyRequest, reply: FastifyReply) {
 
     await updateListUseCase.execute({ title, id });
 
-    return reply.status(201).send();
+    return reply.status(200).send();
 
   } catch (error) {
     return reply.code(500).send({ message: "error" });
