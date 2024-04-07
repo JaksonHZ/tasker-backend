@@ -37,11 +37,31 @@ export class PrismaUserRepository implements UserRepository {
       where: {
         userId: id
       },
+      include:{
+        ItemTODO: {
+          orderBy: {
+              order: 'asc'
+          },
+          include: {
+            Category: true
+          }
+        },
+      },
       orderBy: {
-        orderNumber: 'asc'
+        orderNumber: 'asc',
       }
     })
 
     return lists;
+  }
+
+  async findCategories(id: string){
+    const categories = await prisma.category.findMany({
+      where: {
+        userId: id
+      }
+    })
+
+    return categories;
   }
 }
