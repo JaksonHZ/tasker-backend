@@ -3,9 +3,12 @@ import { verifyJWT } from "../../middlewares/verify-jwt";
 import { createItem } from "./createItem";
 import { updateItem } from "./updateItem";
 import { changeList } from "./changeList";
+import { deleteItem } from "./deleteItem";
+
 export async function itemTODORoutes(app: FastifyInstance) {
   app.addHook("onRequest", verifyJWT);
-  app.post("/createitem", createItem);
-  app.put("/updateitem", updateItem);
+  app.post("/item", createItem);
+  app.put("/item", updateItem);
   app.put("/changelist", changeList);
+  app.delete("/item/:id", deleteItem);
 }

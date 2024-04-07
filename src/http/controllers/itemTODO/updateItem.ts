@@ -22,6 +22,7 @@ export async function updateItem(request: FastifyRequest, reply: FastifyReply) {
     return reply.status(200).send();
 
   } catch (error) {
+    console.error(error)
     return reply.code(500).send({ message: "error" });
   }
 }

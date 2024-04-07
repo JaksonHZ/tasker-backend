@@ -21,6 +21,7 @@ export async function createItem(request: FastifyRequest, reply: FastifyReply) {
     return reply.status(201).send();
 
   } catch (error) {
+    console.error(error)
     return reply.code(500).send({ message: "error" });
   }
 }

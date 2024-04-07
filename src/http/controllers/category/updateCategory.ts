@@ -9,7 +9,8 @@ export async function updateCategory(request: FastifyRequest, reply: FastifyRepl
     id: zod.string()
   });
 
-  const { color, name, id } = bodySchema.parse(request.body);
+  const { color, name } = bodySchema.parse(request.body);
+  const { id } = bodySchema.parse(request.params);
 
   try {
     const updateCategoryUseCase = makeUpdateCategoryUseCase();

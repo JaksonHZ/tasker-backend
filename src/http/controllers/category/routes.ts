@@ -7,6 +7,6 @@ export async function categoryTODORoutes(app: FastifyInstance) {
 
   app.addHook("onRequest", verifyJWT);
   app.post('/category', createCategory);
-  app.put('/category', updateCategory);
-  app.delete('/category', deleteCategory);
+  app.put('/category/:id', updateCategory);
+  app.delete('/category/:id', deleteCategory);
 }

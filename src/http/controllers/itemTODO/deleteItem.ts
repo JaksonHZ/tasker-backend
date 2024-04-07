@@ -1,7 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import zod from 'zod';
-import { makeDeleteListUseCase } from '../../../use-cases/factories/make-deleteList-usecase';
-export async function deleteList(request: FastifyRequest, reply: FastifyReply) {
+import { makeDeleteItemUseCase } from '../../../use-cases/factories/make-deleteItem-usecase';
+
+export async function deleteItem(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = zod.object({
     id: zod.string(),
   });
@@ -9,9 +10,9 @@ export async function deleteList(request: FastifyRequest, reply: FastifyReply) {
   const { id } = bodySchema.parse(request.params);
 
   try {
-    const deleteListUseCase = makeDeleteListUseCase();
+    const deleteItemUseCase = makeDeleteItemUseCase();
 
-    await deleteListUseCase.execute({ id });
+    await deleteItemUseCase.execute({ id });
 
     return reply.status(200).send();
 

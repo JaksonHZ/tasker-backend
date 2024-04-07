@@ -41,8 +41,11 @@ export class PrismaUserRepository implements UserRepository {
         ItemTODO: {
           orderBy: {
               order: 'asc'
+          },
+          include: {
+            Category: true
           }
-        } 
+        },
       },
       orderBy: {
         orderNumber: 'asc',

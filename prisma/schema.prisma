@@ -32,7 +32,7 @@ model ItemTODO {
   description String?
   done        Boolean
   order       Int       @default(0)
-  listTODO    ListTODO  @relation(fields: [listTODOId], references: [id])
+  listTODO    ListTODO  @relation(fields: [listTODOId], references: [id], onDelete: Cascade)
   listTODOId  String
   Category    Category? @relation(fields: [categoryId], references: [id])
   categoryId  String?
