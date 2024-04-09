@@ -9,10 +9,14 @@ export async function updateItem(request: FastifyRequest, reply: FastifyReply) {
     categoryId: zod.string().optional(),
     done: zod.boolean().optional(),
     order: zod.number().optional(),
-    id: zod.string(),
   });
 
-  const { id, title, categoryId, description, done, order } = bodySchema.parse(request.body);
+  const paramsSchema = zod.object({
+    id: zod.string(),
+  })
+
+  const { id } = paramsSchema.parse(request.params);
+  const { title, categoryId, description, done, order } = bodySchema.parse(request.body);
 
   try {
     const updateItemUseCase = makeUpdateItemUseCase();
