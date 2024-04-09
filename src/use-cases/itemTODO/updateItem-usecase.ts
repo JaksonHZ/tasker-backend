@@ -1,5 +1,5 @@
 import { ItemTodoRepository } from "../../repositories/itemTODO-repository";
-
+import { ResourceNotFound } from "../errors/list-not-found";
 interface updateItemUseCaseRequest {
   id: string, 
   title?: string,
@@ -19,7 +19,7 @@ export class UpdateItemUseCase {
     const itemTODO = await this.itemTODORepository.findById(id);
 
     if (!itemTODO) {
-      throw new Error('Item not found');
+      throw new ResourceNotFound();
     }
 
     await this.itemTODORepository.update(id, title, description, categoryId, done, order);

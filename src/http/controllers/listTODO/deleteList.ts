@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import zod from 'zod';
 import { makeDeleteListUseCase } from '../../../use-cases/factories/make-deleteList-usecase';
+import { ResourceNotFound } from '../../../use-cases/errors/list-not-found';
 export async function deleteList(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = zod.object({
     id: zod.string(),
@@ -16,7 +17,10 @@ export async function deleteList(request: FastifyRequest, reply: FastifyReply) {
     return reply.status(200).send();
 
   } catch (error) {
-    console.error(error)
-    return reply.code(500).send({ message: "error" });
+    if (error instanceof ResourceNotFound) {
+      return reply.code(404).send({ message: error.message });
+    }
+
+    throw error;
   }
 }

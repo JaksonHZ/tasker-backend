@@ -1,6 +1,6 @@
 import { ListTodoRepository } from "../../repositories/listTODO-repository";
 import { UserRepository } from "../../repositories/users-repository";
-
+import { ResourceNotFound } from "../errors/list-not-found";
 interface createListUseCaseRequest {
   title: string;
   userId: string;
@@ -17,7 +17,7 @@ export class CreateListUseCase {
     const user = await this.userRepository.findById(userId);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new ResourceNotFound();
     }
 
     await this.listTODORepository.create(title, userId, orderNumber);

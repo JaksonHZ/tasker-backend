@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import zod from 'zod';
 import { makeCreateItemUseCase } from '../../../use-cases/factories/make-createItem-usecase';
-
+import { ResourceNotFound } from '../../../use-cases/errors/list-not-found';
 export async function createItem(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = zod.object({
     title: zod.string(),
@@ -21,7 +21,10 @@ export async function createItem(request: FastifyRequest, reply: FastifyReply) {
     return reply.status(201).send();
 
   } catch (error) {
-    console.error(error)
-    return reply.code(500).send({ message: "error" });
+    if (error instanceof ResourceNotFound) {
+      return reply.code(404).send({ message: error.message });
+    }
+
+    throw error;
   }
 }

@@ -1,5 +1,6 @@
 import { ListTodoRepository } from "../../repositories/listTODO-repository";
 import { ItemTodoRepository } from "../../repositories/itemTODO-repository";
+import { ResourceNotFound } from "../errors/list-not-found";
 
 interface createItemUseCaseRequest {
   title: string,
@@ -19,7 +20,7 @@ export class CreateItemUseCase {
     const list = await this.listTODORepository.findById(listTODOId);
 
     if (!list) {
-      throw new Error('List not found');
+      throw new ResourceNotFound();
     }
 
     await this.itemTODORepository.create(title, listTODOId, order, description, categoryId);
