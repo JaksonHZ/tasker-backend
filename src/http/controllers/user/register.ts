@@ -1,6 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import zod from 'zod';
 import { makeRegisterUseCase } from '../../../use-cases/factories/make-register-usecase';
+import { UserAlreadyExistError } from '../../../use-cases/errors/user-already-exists';
+
 export async function registerUser(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = zod.object({
     email: zod.string().email(),
@@ -18,6 +20,10 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
     return reply.status(201).send();
 
   } catch (error) {
-    return reply.code(500).send({ message: "error" });
+    if(error instanceof UserAlreadyExistError) {
+      return reply.code(409).send({ message: error.message });
+    }
+
+    throw error;
   }
 }

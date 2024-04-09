@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import zod from "zod";
 import { makeAuthenticateUseCase } from "../../../use-cases/factories/make-authenticate-usecase";
+import { InvalidCredentialsError } from "../../../use-cases/errors/invalid-credencials";
 export async function authenticateUser(request: FastifyRequest, reply: FastifyReply) {
 
   const bodySchema = zod.object({
@@ -24,6 +25,10 @@ export async function authenticateUser(request: FastifyRequest, reply: FastifyRe
     });
 
   } catch(error) {
-    return reply.code(401).send({ message: "invalid Credentials" });
+    if (error instanceof InvalidCredentialsError) {
+      return reply.status(400).send({message: error.message})
+    }
+    
+    throw error;
   }
 }

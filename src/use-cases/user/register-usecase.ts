@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import { UserRepository } from "../../repositories/users-repository";
 import { Hash } from "../../cryptography/hash";
+import { UserAlreadyExistError } from "../errors/user-already-exists";
 
 interface RegisterUseCaseRequest {
   username: string;
@@ -23,7 +24,7 @@ export class RegisterUseCase {
     const userAlreadyExists = await this.usersRepository.findUniqueEmail(email);
 
     if (userAlreadyExists) {
-      throw new Error('User already exists');
+      throw new UserAlreadyExistError();
     }
 
     const passwordHash = await this.hash.generator(password);

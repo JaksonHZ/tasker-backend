@@ -1,6 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import zod from 'zod';
 import { makeUpdateOrderListUseCase } from '../../../use-cases/factories/make-updateOrderList-usecase';
+import { ResourceNotFound } from '../../../use-cases/errors/list-not-found';
 export async function updateOrderList(request: FastifyRequest, reply: FastifyReply) {
   const bodySchema = zod.object({
     orderNumber: zod.number(),
@@ -17,6 +18,10 @@ export async function updateOrderList(request: FastifyRequest, reply: FastifyRep
     return reply.status(200).send();
 
   } catch (error) {
-    return reply.code(500).send({ message: "error" });
+    if (error instanceof ResourceNotFound) {
+      return reply.code(404).send({ message: error.message });
+    }
+
+    throw error;
   }
 }

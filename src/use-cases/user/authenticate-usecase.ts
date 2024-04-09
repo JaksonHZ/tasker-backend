@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import { Hash } from "../../cryptography/hash";
 import { UserRepository } from "../../repositories/users-repository";
+import { InvalidCredentialsError } from "../errors/invalid-credencials";
 
 interface AuthenticateUseCaseRequest {
   email: string;
@@ -21,13 +22,13 @@ export class AuthenticateUseCase {
     const user = await this.usersRepository.findUniqueEmail(email);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new InvalidCredentialsError();
     }
 
     const passwordMatch = await this.hash.compare(password, user.passwordHash);
 
     if (!passwordMatch) {
-      throw new Error('Password does not match');
+      throw new InvalidCredentialsError();
     }
 
     return {

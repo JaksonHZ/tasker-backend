@@ -1,5 +1,5 @@
 import { ListTodoRepository } from "../../repositories/listTODO-repository";
-
+import { ResourceNotFound } from "../errors/list-not-found";
 interface DeleteListUseCaseRequest {
   id: string;
 }
@@ -14,7 +14,7 @@ export class DeleteListUseCase {
     const list = await this.listTODORepository.findById(id)
 
     if (!list) {
-      throw new Error('List not found');
+      throw new ResourceNotFound();
     }
 
     await this.listTODORepository.delete(id)
