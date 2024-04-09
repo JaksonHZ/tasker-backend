@@ -8,7 +8,7 @@ import { deleteList } from "./deleteList";
 export async function listTODORoutes(app: FastifyInstance) {
   app.addHook("onRequest", verifyJWT);
   app.post("/list" ,createList);
-  app.put("/list", updateList);
+  app.put("/list/:id", updateList);
   app.put("/updateorderlist", updateOrderList);
   app.delete("/list/:id", deleteList);
 }

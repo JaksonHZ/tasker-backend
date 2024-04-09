@@ -3,17 +3,21 @@ import zod from 'zod';
 import { makeUpdateListUseCase } from '../../../use-cases/factories/make-updateList-usecase';
 import { ResourceNotFound } from '../../../use-cases/errors/list-not-found';
 export async function updateList(request: FastifyRequest, reply: FastifyReply) {
-  const bodySchema = zod.object({
-    title: zod.string(),
+  const paramsSchema = zod.object({
     id: zod.string(),
   });
-
-  const { title, id } = bodySchema.parse(request.body);
+  
+  const bodySchema = zod.object({
+    title: zod.string(),
+  });
+  
+  const { id } = paramsSchema.parse(request.params);
+  const { title } = bodySchema.parse(request.body);
 
   try {
     const updateListUseCase = makeUpdateListUseCase();
 
-    await updateListUseCase.execute({ title, id });
+    await updateListUseCase.execute({ id, title });
 
     return reply.status(200).send();
 
